@@ -1,0 +1,131 @@
+
+body {
+  color: #8c8c8c;
+  font-size: 3vw;
+  text-align: center;
+  text-shadow: 0 0 20px;
+  margin: 0 0;
+}
+
+h1 {
+  font-family: pacifico;
+  padding: 10% 0 0 0;
+  margin-right: 15%;
+  margin-left: 15%;
+  border-style: solid;
+  border-width: 1px 0 0 0;
+  border-radius: 50%;
+}
+p {
+  font-family: Aleo;
+  font-weight: bold;
+}
+.clear,
+.rain,
+.clouds,
+.snow,
+.partial,
+.thunder {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.clear {
+  background-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0),
+      rgba(255, 255, 255, 0)
+    ),
+    url(https://thumbs.gfycat.com/RingedConfusedAfricanbushviper-small.gif);
+}
+.rain {
+  background-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 1),
+      rgba(255, 255, 255, 0)
+    ),
+    url(https://i.giphy.com/media/3og0IOUWB5AZoP6la0/giphy.webp);
+}
+.clouds {
+  background-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 1),
+      rgba(255, 255, 255, 0)
+    ),
+    url(https://media1.giphy.com/media/4N1FZFE5AGO3qrUGkw/source.gif);
+}
+.partial {
+  background-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 1),
+      rgba(255, 255, 255, 0)
+    ),
+    url(https://coalregioncanary.com/wp-content/uploads/2020/08/009c5944.gif);
+}
+.snow {
+  background-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 1),
+      rgba(255, 255, 255, 0)
+    ),
+    url(https://media0.giphy.com/media/3oFzmrk6S4UONeH04w/200.gif);
+}
+.thunder {
+  background-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 1),
+      rgba(255, 255, 255, 0)
+    ),
+    url(https://media3.giphy.com/media/26uf5HjasTtxtNCqQ/giphy.gif);
+}
+.fa-sun {
+  color: gold;
+  animation: sun-rotation 6s linear infinite;
+}
+.fa-moon {
+  color:blue;
+}
+#info-wrapper {
+  background: rgba(0, 0, 0, 1);
+  height: 100%;
+  padding: 0.5rem;
+}
+#img {
+  max-width: 100%;
+  height: 60vh;
+  border-radius: 10px;
+}
+#sunMoon-icon {
+  /*6.5-16.5 top, -34, 36 sides */
+  font-size: 5vw;
+  position: relative;
+  top: 16.5vw;
+  left:-34vw
+}
+#unit-icon {
+  letter-spacing: 2px;
+}
+#unit {
+  cursor: pointer;
+  color: green;
+}
+#img-wrapper {
+  height: 100%;
+}
+#hour {
+  position: relative;
+  font-size: 3.5vw;
+  top: 4vw;
+  font-family: Aleo;
+  font-weight: bold;
+}
+@keyframes blinker {  
+  50% { opacity: 0; }
+}
+@keyframes sun-rotation {
+  100% {transform: rotate(360deg)}
+}
+#hour span {
+  margin: 0 0.5vw;
+  animation: blinker 1s linear infinite;
+}
