@@ -90,6 +90,7 @@ p {
   font-size:5vw;
   position: relative;
   z-index: 1;
+  color: rgb(72 92 112);
 }
 #info-wrapper {
   background: rgba(0, 0, 0, 1);
@@ -126,19 +127,21 @@ p {
   font-weight: bold;
 }
 #low-mountain-left {
-  left: -21.5vw;
+  left: -22.2vw;
   font-size: 4vw;
+  color: rgb(38 49 59);
 }
 #high-mountain-left {
-  left: -25.5vw;
+  left: -26.2vw;
   z-index: 2;
 }
 #low-mountain-right {
-  left: 27vw;
+  left: 29.5vw;
   font-size: 4vw;
+  color: rgb(38 49 59);
 }
 #high-mountain-right {
-  left: 23vw;
+  left: 20.5vw;
   z-index: 2;
 }
 

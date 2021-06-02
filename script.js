@@ -75,7 +75,6 @@ window.addEventListener("DOMContentLoaded", () => {
     if (hour < 6 || hour >= 18) { sunMoon.className = 'fas fa-moon'; hour -= 12; }
     posLeft = -34 + (((hour - 6) / 12) * 68) + (min / 60) * ((1 / 12) * 68);
     posTop = yAxisValues[Math.abs(Math.abs(hour - 12) - 6)];
-    console.log(posTop, posLeft);
     sunMoon.style.left = `${posLeft}vw`;
     sunMoon.style.top = `${posTop}vw`;
   }
