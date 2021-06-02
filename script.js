@@ -13,7 +13,7 @@ window.addEventListener("DOMContentLoaded", () => {
       http.onreadystatechange = () => {
         if (http.readyState === 4 && http.status === 200) {
           const data = JSON.parse(http.responseText);
-          // -------------------TODO : destructuring assignment to unclog constant assignment
+          // --------------------TODO : destructuring assignment to unclog constant assignment
           console.log(data);
           const city = document.createTextNode(data.name + ", ");
           const country = document.createTextNode(data.sys.country);
