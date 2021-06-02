@@ -91,6 +91,11 @@ p {
   position: relative;
   z-index: 1;
   color: rgb(72 92 112);
+  text-shadow: 5p 5px 10px rgb(72 92 112);
+}
+#error {
+  color: red;
+  text-shadow:none;
 }
 #info-wrapper {
   background: rgba(0, 0, 0, 1);
@@ -143,6 +148,30 @@ p {
 #high-mountain-right {
   left: 20.5vw;
   z-index: 2;
+}
+#high-mountain-left:after, #high-mountain-right:after {
+  content: "";
+  display:inline-block;
+  position: absolute;
+  left:2.1vw;
+  top:0.8vw;
+  border-radius:30%;
+  background-color:snow;
+  width: 2vw;
+  height: 3vw;
+  z-index: -1;
+}
+#low-mountain-left:after, #low-mountain-right:after {
+  content: "";
+  display:inline-block;
+  position: absolute;
+  left:1.8vw;
+  top:0.7vw;
+  border-radius:30%;
+  background-color:snow;
+  width: 1.5vw;
+  height: 2vw;
+  z-index: -1;
 }
 
 @keyframes blinker {  

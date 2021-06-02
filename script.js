@@ -13,7 +13,7 @@ window.addEventListener("DOMContentLoaded", () => {
       http.onreadystatechange = () => {
         if (http.readyState === 4 && http.status === 200) {
           const data = JSON.parse(http.responseText);
-          // TODO : destructuring assignment to unclog constant assignment
+          // -------------------TODO : destructuring assignment to unclog constant assignment
           console.log(data);
           const city = document.createTextNode(data.name + ", ");
           const country = document.createTextNode(data.sys.country);
@@ -21,7 +21,7 @@ window.addEventListener("DOMContentLoaded", () => {
           const fahr = document.createTextNode(
             Math.round(data.main.temp * 1.8 + 32)
           );
-          // TODO : querySelectorAll loop to assign ID constants 
+          // -------------------TODO : querySelectorAll loop to assign ID constants 
           const cityNode = document.getElementById("ville");
           const countryNode = document.getElementById("pays");
           const tempNode = document.getElementById("temp");
@@ -52,21 +52,21 @@ window.addEventListener("DOMContentLoaded", () => {
     }
 
     const error = (e) => {
-      let errMsg = `<p>${e.code}: ${e.message}<br>Please activate geolocation to retrieve weather information</p>`;
+      let errMsg = `<p id="error">${e.code}: ${e.message}<br>Please activate Geolocation to retrieve weather information</p>`;
       document.body.innerHTML = errMsg;
     }
 
     navigator.geolocation.getCurrentPosition(success, error); //TODO : User gesture to ask geolocation
   }
   // ------------------Time formatting in DOM
-  let timer = () => {
+  let refreshInfo = () => {
     let [hour, min] = [new Date().getHours(), new Date().getMinutes()];
     let minutesFormat = () => {
       if (min < 10) return "0" + min;
       return min;
     };
     let hourDisplay = document.getElementById("hour");
-    hourDisplay.innerHTML = `<p>${hour} <span>:</span> ${minutesFormat()}</p>`;
+    hourDisplay.innerHTML = `<p>${hour}<span>:</span>${minutesFormat()}</p>`;
     //------------------Assign sunMoon icon position and appearance depending on current time
     const yAxisValues = [16.5, 11, 9.5, 8, 7.5, 7, 6.5]; // preset y axis position values for icon
     const sunMoon = document.querySelector('#sunMoon-icon');
@@ -78,5 +78,5 @@ window.addEventListener("DOMContentLoaded", () => {
     sunMoon.style.left = `${posLeft}vw`;
     sunMoon.style.top = `${posTop}vw`;
   }
-  setInterval(timer, 1000);
+  setInterval(refreshInfo, 1000);
 });
