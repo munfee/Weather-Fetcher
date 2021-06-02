@@ -85,6 +85,12 @@ p {
 .fa-moon {
   color:blue;
 }
+.fa-mountain {
+  top: 16.5vw;
+  font-size:5vw;
+  position: relative;
+  z-index: 1;
+}
 #info-wrapper {
   background: rgba(0, 0, 0, 1);
   height: 100%;
@@ -96,7 +102,7 @@ p {
   border-radius: 10px;
 }
 #sunMoon-icon {
-  /*6.5-16.5 top, -34, 36 sides */
+  /*6.5-16.5 top, -34, 34 left : starting point */
   font-size: 5vw;
   position: relative;
   top: 16.5vw;
@@ -119,6 +125,23 @@ p {
   font-family: Aleo;
   font-weight: bold;
 }
+#low-mountain-left {
+  left: -21.5vw;
+  font-size: 4vw;
+}
+#high-mountain-left {
+  left: -25.5vw;
+  z-index: 2;
+}
+#low-mountain-right {
+  left: 27vw;
+  font-size: 4vw;
+}
+#high-mountain-right {
+  left: 23vw;
+  z-index: 2;
+}
+
 @keyframes blinker {  
   50% { opacity: 0; }
 }

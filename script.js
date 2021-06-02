@@ -58,7 +58,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
     navigator.geolocation.getCurrentPosition(success, error); //TODO : User gesture to ask geolocation
   }
-  // Time formatting in DOM
+  // ------------------Time formatting in DOM
   let timer = () => {
     let [hour, min] = [new Date().getHours(), new Date().getMinutes()];
     let minutesFormat = () => {
@@ -67,7 +67,7 @@ window.addEventListener("DOMContentLoaded", () => {
     };
     let hourDisplay = document.getElementById("hour");
     hourDisplay.innerHTML = `<p>${hour} <span>:</span> ${minutesFormat()}</p>`;
-    //Assign sunMoon icon position and appearance depending on current time
+    //------------------Assign sunMoon icon position and appearance depending on current time
     const yAxisValues = [16.5, 11, 9.5, 8, 7.5, 7, 6.5]; // preset y axis position values for icon
     const sunMoon = document.querySelector('#sunMoon-icon');
     let posLeft, posTop;
