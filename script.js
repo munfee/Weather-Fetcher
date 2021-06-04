@@ -1,55 +1,55 @@
 window.addEventListener("DOMContentLoaded", () => {
+  // --------------------------- defining object to store weather data 
+  let idObj = { currentUnit: 'C' }, idArr = ['location', 'img', 'unit', 'unit-icon']; // computed properties to assign id nodes in Object
+  idArr.forEach(idNode => idObj[idNode] = document.getElementById(idNode));
+  let newTextNode = function (parent, textNode) { // text node appending helper funtion
+    if (parent.childNodes.length === 0) {
+      parent.appendChild(textNode);
+    } else parent.replaceChild(textNode, parent.childNodes[0]);
+  }
+  //----------------------------idObj methods 
+  idObj.setLocation = function (city, country) { // parameters destructuring assignment
+    let location = document.createTextNode(`${city}, ${country}`);
+    newTextNode(this['location'], location);
+  };
+
+  idObj.setTemp = function (temp) { // see line 17
+    let unitNumber = document.createTextNode(`${this.currentUnit === 'C' ? parseFloat(temp).toFixed(1) : Math.round(temp * 1.8 + 32)}`);
+    newTextNode(this['unit'], unitNumber);
+    let unit = document.createTextNode(`°${this.currentUnit}`);
+    newTextNode(this['unit-icon'], unit);
+  };
+
+  idObj.changeCurrentUnit = function (temp) {
+    this.currentUnit = this.currentUnit === 'C' ? 'F' : 'C';
+    this.setTemp(temp);
+  };
+  //-------------------------------
   if (navigator.geolocation) {
 
     const success = (pos) => {
       const { latitude: lat, longitude: long } = pos.coords;
-      const http = new XMLHttpRequest(); // Get weather info through FCC proxy API
       const url = `https://weather-proxy.freecodecamp.rocks/api/current?lat=${lat}&lon=${long}`;
 
-      let idObj = { currentUnit: 'C' }, idArr = ['location', 'img', 'unit', 'unit-icon']; // computed properties to assign id nodes in Object
-      idArr.forEach(idNode => idObj[idNode] = document.getElementById(idNode));
-      let newTextNode = function (parent, textNode) { // text node appending helper funtion
-        if (parent.childNodes.length === 0) {
-          parent.appendChild(textNode);
-        } else parent.replaceChild(textNode, parent.childNodes[0]);
-      }
-      //----------------------------idObj methods 
-      idObj.setLocation = function ({ name: city, sys: { country } }) { // parameters destructuring assignment
-        let location = document.createTextNode(`${city}, ${country}`);
-        newTextNode(this['location'], location);
-      };
-
-      idObj.setTemp = function ({ main: { temp } }) { // see line 17
-        let unitNumber = document.createTextNode(`${this.currentUnit === 'C' ? parseFloat(temp).toFixed(1) : Math.round(temp * 1.8 + 32)}`);
-        newTextNode(this['unit'], unitNumber);
-        let unit = document.createTextNode(`°${this.currentUnit}`);
-        newTextNode(this['unit-icon'], unit);
-      };
-
-      idObj.changeCurrentUnit = function (temp) {
-        this.currentUnit = this.currentUnit === 'C' ? 'F' : 'C';
-        this.setTemp(temp);
-      }.bind(idObj);
-      //-------------------------------
-      
       let httpReq = () => {
-      http.open("GET", url, true);
-      http.send();
+        const http = new XMLHttpRequest(); // Get weather info through FCC proxy API
+        http.open("GET", url, true);
+        http.send();
 
         http.onreadystatechange = () => {
           if (http.readyState === 4 && http.status === 200) {
             const data = JSON.parse(http.responseText);
 
-            idObj.setLocation(data);
-            idObj.setTemp(data)
+            idObj.setLocation(data.name, data.sys.country);
+            idObj.setTemp(data.main.temp)
             idObj['img'].className = data.weather[0].main.toLowerCase();
-            idObj['unit-icon'].addEventListener("click", () => { idObj.changeCurrentUnit(data); });
-            console.log('new call');
+            idObj['unit-icon'].onclick = function () { idObj.changeCurrentUnit(data.main.temp); };
+            console.log('GET');
           }
         };
       }
       httpReq();
-      setInterval(httpReq, 1000);
+      setInterval(httpReq, 10000);
     }
 
     const error = (e) => {
