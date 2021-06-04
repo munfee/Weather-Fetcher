@@ -115,11 +115,11 @@ p {
   left:-34vw
 }
 #unit-icon {
-  letter-spacing: 2px;
-}
-#unit {
   cursor: pointer;
   color: green;
+}
+#unit {
+  letter-spacing: 2px;
 }
 #img-wrapper {
   height: 100%;
