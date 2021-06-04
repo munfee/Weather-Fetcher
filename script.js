@@ -4,51 +4,52 @@ window.addEventListener("DOMContentLoaded", () => {
     const success = (pos) => {
       const { latitude: lat, longitude: long } = pos.coords;
       const http = new XMLHttpRequest(); // Get weather info through FCC proxy API
-      const url =
-        `https://weather-proxy.freecodecamp.rocks/api/current?lat=${lat}&lon=${long}`;
+      const url = `https://weather-proxy.freecodecamp.rocks/api/current?lat=${lat}&lon=${long}`;
 
+      let idObj = { currentUnit: 'C' }, idArr = ['location', 'img', 'unit', 'unit-icon']; // computed properties to assign id nodes in Object
+      idArr.forEach(idNode => idObj[idNode] = document.getElementById(idNode));
+      let newTextNode = function (parent, textNode) { // text node appending helper funtion
+        if (parent.childNodes.length === 0) {
+          parent.appendChild(textNode);
+        } else parent.replaceChild(textNode, parent.childNodes[0]);
+      }
+      //----------------------------idObj methods 
+      idObj.setLocation = function ({ name: city, sys: { country } }) { // parameters destructuring assignment
+        let location = document.createTextNode(`${city}, ${country}`);
+        newTextNode(this['location'], location);
+      };
+
+      idObj.setTemp = function ({ main: { temp } }) { // see line 17
+        let unitNumber = document.createTextNode(`${this.currentUnit === 'C' ? parseFloat(temp).toFixed(1) : Math.round(temp * 1.8 + 32)}`);
+        newTextNode(this['unit'], unitNumber);
+        let unit = document.createTextNode(`°${this.currentUnit}`);
+        newTextNode(this['unit-icon'], unit);
+      };
+
+      idObj.changeCurrentUnit = function (temp) {
+        this.currentUnit = this.currentUnit === 'C' ? 'F' : 'C';
+        this.setTemp(temp);
+      }.bind(idObj);
+      //-------------------------------
+      
+      let httpReq = () => {
       http.open("GET", url, true);
       http.send();
 
-      http.onreadystatechange = () => {
-        if (http.readyState === 4 && http.status === 200) {
-          const data = JSON.parse(http.responseText);
-          // --------------------TODO : destructuring assignment to unclog constant assignment
-          console.log(data);
-          const city = document.createTextNode(data.name + ", ");
-          const country = document.createTextNode(data.sys.country);
-          const celsius = document.createTextNode(parseFloat(data.main.temp).toFixed(1));
-          const fahr = document.createTextNode(
-            Math.round(data.main.temp * 1.8 + 32)
-          );
-          // -------------------TODO : querySelectorAll loop to assign ID constants 
-          const cityNode = document.getElementById("ville");
-          const countryNode = document.getElementById("pays");
-          const tempNode = document.getElementById("temp");
-          const img = document.getElementById("img");
-          const unit = document.getElementById("unit");
-          const unitIcon = document.getElementById("unit-icon");
+        http.onreadystatechange = () => {
+          if (http.readyState === 4 && http.status === 200) {
+            const data = JSON.parse(http.responseText);
 
-          img.className = data.weather[0].main.toLowerCase();
-          cityNode.insertBefore(city, cityNode.childNodes[0]);
-          countryNode.appendChild(country);
-
-          unit.textContent = "C";
-          unitIcon.innerHTML = " &#176;";
-          tempNode.insertBefore(celsius, document.getElementById("unit-icon"));
-
-          unit.addEventListener("click", function () { // Temp unit toggling
-            this.classList.toggle("fahr");
-            if (this.classList.contains("fahr")) {
-              this.textContent = "F";
-              tempNode.replaceChild(fahr, tempNode.childNodes[0]);
-            } else {
-              this.textContent = "C";
-              tempNode.replaceChild(celsius, tempNode.childNodes[0]);
-            }
-          });
-        }
-      };
+            idObj.setLocation(data);
+            idObj.setTemp(data)
+            idObj['img'].className = data.weather[0].main.toLowerCase();
+            idObj['unit-icon'].addEventListener("click", () => { idObj.changeCurrentUnit(data); });
+            console.log('new call');
+          }
+        };
+      }
+      httpReq();
+      setInterval(httpReq, 1000);
     }
 
     const error = (e) => {
