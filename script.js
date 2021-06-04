@@ -1,7 +1,8 @@
 window.addEventListener("DOMContentLoaded", () => {
-  // --------------------------- defining object to store weather data 
-  let idObj = { currentUnit: 'C' }, idArr = ['location', 'img', 'unit', 'unit-icon']; // computed properties to assign id nodes in Object
-  idArr.forEach(idNode => idObj[idNode] = document.getElementById(idNode));
+  // --------------------------------------------------------------------------------------------defining object to store weather data 
+  let idObj = { currentUnit: 'C' }, idArr = document.querySelectorAll('body [id]'); // computed properties to assign id nodes in Object
+  idArr.forEach(idNode => idObj[idNode.id] = idNode);
+  
   let newTextNode = function (parent, textNode) { // text node appending helper funtion
     if (parent.childNodes.length === 0) {
       parent.appendChild(textNode);
@@ -24,7 +25,9 @@ window.addEventListener("DOMContentLoaded", () => {
     this.currentUnit = this.currentUnit === 'C' ? 'F' : 'C';
     this.setTemp(temp);
   };
-  //-------------------------------
+
+  console.table(idObj);
+  //--------------------------------------------------------------------------------------------------------------------------------
   if (navigator.geolocation) {
 
     const success = (pos) => {
@@ -39,6 +42,7 @@ window.addEventListener("DOMContentLoaded", () => {
         http.onreadystatechange = () => {
           if (http.readyState === 4 && http.status === 200) {
             const data = JSON.parse(http.responseText);
+            console.log(data);
 
             idObj.setLocation(data.name, data.sys.country);
             idObj.setTemp(data.main.temp)
@@ -61,23 +65,25 @@ window.addEventListener("DOMContentLoaded", () => {
   }
   // ------------------Time formatting in DOM
   let refreshInfo = () => {
-    let [hour, min] = [new Date().getHours(), new Date().getMinutes()];
-    let minutesFormat = () => {
-      if (min < 10) return "0" + min;
-      return min;
+    let d = new Date();
+    let [hour, min, sec] = [d.getHours(), d.getMinutes(), d.getSeconds()];
+    let format = (time) => {
+      if (time < 10) return "0" + time;
+      return time;
     };
-    let hourDisplay = document.getElementById("hour");
-    hourDisplay.innerHTML = `<p>${hour}<span>:</span>${minutesFormat()}</p>`;
-    //------------------Assign sunMoon icon position and appearance depending on current time
+
+    idObj['hour'].innerHTML = `<p>${hour}<span>:</span>${format(min)}<span>:</span>${format(sec)}</p>`;
+    //------------------Assign idObj['sunMoon-icon'] icon position and appearance depending on current time
     const yAxisValues = [16.5, 11, 9.5, 8, 7.5, 7, 6.5]; // preset y axis position values for icon
-    const sunMoon = document.querySelector('#sunMoon-icon');
-    let posLeft, posTop;
-    sunMoon.className = 'fas fa-sun';
-    if (hour < 6 || hour >= 18) { sunMoon.className = 'fas fa-moon'; hour -= 12; }
-    posLeft = -34 + (((hour - 6) / 12) * 68) + (min / 60) * ((1 / 12) * 68);
-    posTop = yAxisValues[Math.abs(Math.abs(hour - 12) - 6)];
-    sunMoon.style.left = `${posLeft}vw`;
-    sunMoon.style.top = `${posTop}vw`;
+    idObj['sunMoon-icon'].className = 'fas fa-sun';
+    if (hour < 6 || hour >= 18) {
+      idObj['sunMoon-icon'].className = 'fas fa-moon';
+      hour -= 12;
+    }
+    let posLeft = -34 + (((hour - 6) / 12) * 68) + (min / 60) * ((1 / 12) * 68);
+    let posTop = yAxisValues[Math.abs(Math.abs(hour - 12) - 6)];
+    idObj['sunMoon-icon'].style.left = `${posLeft}vw`;
+    idObj['sunMoon-icon'].style.top = `${posTop}vw`;
   }
   setInterval(refreshInfo, 1000);
 });
