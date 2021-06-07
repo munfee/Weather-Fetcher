@@ -79,7 +79,7 @@ p {
     url(https://media3.giphy.com/media/26uf5HjasTtxtNCqQ/giphy.gif);
 }
 .fa-sun {
-  color: gold;
+  color:rgb(255, 215, 0);
   animation: sun-rotation 6s linear infinite;
 }
 .fa-moon {

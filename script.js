@@ -2,7 +2,7 @@ window.addEventListener("DOMContentLoaded", () => {
   // --------------------------------------------------------------------------------------------defining object to store weather data 
   let idObj = { currentUnit: 'C' }, idArr = document.querySelectorAll('body [id]'); // computed properties to assign id nodes in Object
   idArr.forEach(idNode => idObj[idNode.id] = idNode);
-  
+
   let newTextNode = function (parent, textNode) { // text node appending helper funtion
     if (parent.childNodes.length === 0) {
       parent.appendChild(textNode);
@@ -74,16 +74,18 @@ window.addEventListener("DOMContentLoaded", () => {
 
     idObj['hour'].innerHTML = `<p>${hour}<span>:</span>${format(min)}<span>:</span>${format(sec)}</p>`;
     //------------------Assign idObj['sunMoon-icon'] icon position and appearance depending on current time
-    const yAxisValues = [16.5, 11, 9.5, 8, 7.5, 7, 6.5]; // preset y axis position values for icon
-    idObj['sunMoon-icon'].className = 'fas fa-sun';
+    let yAxisValues = [16.5, 11, 9.5, 8, 7.5, 7, 6.5]; // preset y axis position values for icon
+    yAxisValues = [...yAxisValues, ...(yAxisValues.slice(0, 6).reverse())];
     if (hour < 6 || hour >= 18) {
       idObj['sunMoon-icon'].className = 'fas fa-moon';
       hour -= 12;
     }
     let posLeft = -34 + (((hour - 6) / 12) * 68) + (min / 60) * ((1 / 12) * 68);
-    let posTop = yAxisValues[Math.abs(Math.abs(hour - 12) - 6)];
+    let posTop = yAxisValues[hour - 6] + ((yAxisValues[hour - 5]-yAxisValues[hour - 6])*(min/60));
     idObj['sunMoon-icon'].style.left = `${posLeft}vw`;
     idObj['sunMoon-icon'].style.top = `${posTop}vw`;
+    if (hour < 7) document.querySelector('.fa-sun').style.color = `rgb(255, ${125 + min * 1.5}, 0)`;
+    if (hour >= 17) document.querySelector('.fa-sun').style.color = `rgb(255, ${215 - min * 1.5}, 0)`;
   }
   setInterval(refreshInfo, 1000);
 });
