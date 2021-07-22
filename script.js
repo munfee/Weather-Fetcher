@@ -26,7 +26,6 @@ window.addEventListener("DOMContentLoaded", () => {
     this.setTemp(temp);
   };
 
-  console.table(idObj);
   //--------------------------------------------------------------------------------------------------------------------------------
   if (navigator.geolocation) {
 
@@ -48,7 +47,6 @@ window.addEventListener("DOMContentLoaded", () => {
             idObj.setTemp(data.main.temp)
             idObj['img'].className = data.weather[0].main.toLowerCase();
             idObj['unit-icon'].onclick = function () { idObj.changeCurrentUnit(data.main.temp); };
-            console.log('GET');
           }
         };
       }
@@ -81,7 +79,7 @@ window.addEventListener("DOMContentLoaded", () => {
       hour -= 12;
     }
     let posLeft = -34 + (((hour - 6) / 12) * 68) + (min / 60) * ((1 / 12) * 68);
-    let posTop = yAxisValues[hour - 6] + ((yAxisValues[hour - 5]-yAxisValues[hour - 6])*(min/60));
+    let posTop = yAxisValues[hour - 6] + ((yAxisValues[hour - 5] - yAxisValues[hour - 6]) * (min / 60));
     idObj['sunMoon-icon'].style.left = `${posLeft}vw`;
     idObj['sunMoon-icon'].style.top = `${posTop}vw`;
     if (hour < 7) document.querySelector('.fa-sun').style.color = `rgb(255, ${125 + min * 1.5}, 0)`;
